@@ -1,0 +1,86 @@
+/* indx.html */
+
+#alert {
+    background-color: skyblue;
+    padding: 20px;
+    color: black;
+    border-radius: 5px;
+    display: none;
+}
+#alert2 {
+    background-color: lightcoral;
+    padding: 20px;
+    color: black;
+    font-size: 40px;
+    border-radius: 5px;
+    display: none;
+}
+
+/* modal.html */
+
+
+/* one-way UI 에니메이션 */
+
+/* 1. A상태 -> B상태 */
+/* 2. CSS에서 각각 스타일을 class로 시작스타일과 최종스타일 만들기 */
+/* 3. 자바스크립트로 최종스타일로 변경하라는 코드 구현 */
+/* 4. CSS transition추가 */
+
+.black-bg {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+  padding: 30px;
+  visibility: hidden; /* 에니메이션 줄때 display:none 대용*/
+  opacity: 0;
+  transition: all 0.5s; /*모든 css속성이 변할때 1초에 걸쳐서 변경된다 */
+}
+.white-bg {
+  background: white;
+  border-radius: 5px;
+  padding: 30px;
+}
+
+.list-group {
+  height: 0;
+  overflow: hidden;
+  visibility: visible;
+  opacity: 0;
+  transition: all 0.5s;
+}
+
+.show {
+  height: 100%;
+  visibility: visible;
+  opacity: 1;
+  animation: fadeIn 0.5s ease-in-out;
+}
+.hello {
+    display: block;
+}
+
+.colorChange {
+    color: green;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(4px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* form만들기*/
+
+.main-bg {
+    margin-top: 10px;
+    padding: 100px 20px;
+    background-color: #E9F8F9;
+    border: 1px solid;
+}

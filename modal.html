@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="main.css" />
+    <!-- jQuery -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <title>Modal window</title>
+  </head>
+  <body>
+    <!-- 모달창 -->
+    <div class="black-bg">
+      <div class="white-bg">
+        <h4>로그인하세요</h4>
+        <!-- form태그안 action속성에는 서버로 전송시에 이동할 페이지 url을 기재 -->
+        <form action="success.html">
+            <div class="my-3">
+                <input id="email" type="text" class="form-control" placeholder="아이디를 입력하세요">
+            </div>
+            <div class="my-3">
+                <input id="pw" type="password" class="form-control" placeholder="비밀번호를 입력하세요">
+            </div>
+            <button id="send" type="submit" class="btn btn-primary">전송</button>
+            <button type="button" class="btn btn-danger" id="close">닫기</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+        //전송버튼 눌렀을때, input창에 입력한 값이 공백이면 -> 알림창띄우기
+        //폼 전송 기본 속성 막기 e.preventDefault()
+        //아이디 입력칸 띄우면 '아이디입력하세요'
+        //비번 입력칸 띄우면 '비번 입력하세요'
+        // + 비밀번호 자릿수 조건 추가
+        document.querySelector('form').addEventListener('submit', (e)=>{
+            if(document.querySelector('#email').value === ''){
+                e.preventDefault();
+                alert('아이디를 입력하세요')}
+            if(document.querySelector('#pw').value === ''){
+                e.preventDefault();
+                alert('비밀번호를 입력하세요')}
+            if(document.querySelector('#pw').value.length < 8){
+                e.preventDefault();
+                alert('비밀번호는 8자리 이상 입력해야합니다!')
+            }
+        })
+        
+        document.querySelector('#email').addEventListener('change', ()=>{
+            console.log('안녕')
+        })
+        
+    </script>
+    <!-- nav바 메뉴 -->
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <span class="navbar-brand">Navbar</span>
+        <button class="navbar-toggler" type="button">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- nav바 토글버튼 -->
+    <!-- 클래스 탈부착해서 속성 넣고 빼는거 나중에 에니메이션 추가 쉽고 재사용도 편리 -->
+    <ul class="list-group">
+      <li class="list-group-item">An item</li>
+      <li class="list-group-item">A second item</li>
+      <li class="list-group-item">A third item</li>
+      <li class="list-group-item">A fourth item</li>
+      <li class="list-group-item">And a fifth one</li>
+    </ul>
+
+    <!-- 로그인 창 -->
+    <div class="main-bg">
+        <h4>Shirts on Sale</h4>
+        <button id="logIn" class="btn btn-danger">로그인해라</button>
+    </div>
+
+    <!-- 하늘색 알림창 -->
+    <div id="alert">
+      <p id="title">알림창1</p>
+      <button id="close1">닫기</button>
+    </div>
+    <!-- 분홍색 알림창 -->
+    <div id="alert2">
+      <p id="title2">알림창2</p>
+      <button id="close2">닫기2</button>
+    </div>
+
+    <button id="open">history</button>
+    <button id="open2">shop</button>
+    <button id="open3">info</button>
+
+
+    <script>
+      //열기
+      $("#open").on("click", () => {
+        $("#alert").css('display','block');
+        $("#title").html("히스토리 입니다");
+      });
+      $("#open2").on("click", () => {
+        $("#alert").css('display','block');
+        $("#title").html("상품 페이지입니다");
+      });
+      $("#open3").on("click", () => {
+        $("#alert2").css('display','block');
+        $("#title2").html("정보 페이지입니다");
+      });
+
+      //닫기
+      $("#close1").on("click", () => {
+        $("#alert").css('display','none');
+      });
+      $("#close2").on("click", () => {
+        $("#alert2").css('display','none');
+      });
+
+      // 모달창은 전체 블랙배경위에 흰색모달창으로 구성되어있음
+      //로그인 버튼 누르면 모달창 열리기(show클래스를 모달창에 붙이기)
+      $("#logIn").on("click", () => {
+        $(".black-bg").addClass("show");
+      });
+
+      // 닫기 누르면 모달창 닫히고 배경
+      $("#close").on("click", () => {
+        $(".black-bg").removeClass("show");
+      });
+
+      // 네비게이션바 토글 버튼
+      $(".navbar-toggler").on("click", () => {
+        $(".list-group").toggleClass("show");
+      });
+
+
+    </script>
+  </body>
+</html>
