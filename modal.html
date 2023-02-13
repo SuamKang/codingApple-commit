@@ -40,39 +40,37 @@
       </div>
     </div>
 
-    <script>
-        //전송버튼 눌렀을때, input창에 입력한 값이 공백이면 -> 알림창띄우기
-        //폼 전송 기본 속성 막기 e.preventDefault()
-        //아이디 입력칸 띄우면 '아이디입력하세요'
-        //비번 입력칸 띄우면 '비번 입력하세요'
-        // + 비밀번호 자릿수 조건 추가
-        document.querySelector('form').addEventListener('submit', (e)=>{
-            if(document.querySelector('#email').value === ''){
-                e.preventDefault();
-                alert('아이디를 입력하세요')}
-            if(document.querySelector('#pw').value === ''){
-                e.preventDefault();
-                alert('비밀번호를 입력하세요')}
-            if(document.querySelector('#pw').value.length < 8){
-                e.preventDefault();
-                alert('비밀번호는 8자리 이상 입력해야합니다!')
-            }
-        })
-        
-        document.querySelector('#email').addEventListener('change', ()=>{
-            console.log('안녕')
-        })
-        
-    </script>
     <!-- nav바 메뉴 -->
     <nav class="navbar navbar-light bg-light">
       <div class="container-fluid">
         <span class="navbar-brand">Navbar</span>
+        <span class="badge bg-dark">Dark 🔄</span> <!--다크모드 토글 과제-->
         <button class="navbar-toggler" type="button">
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
     </nav>
+
+  <script>
+    // 뱃지 클릭횟수 변수설정
+    let count = 0;
+    // 클릭할때마다 count 1씩 증가
+   $('.badge').on('click',()=>{
+    count++; 
+    // 클릭횟수가 홀수면 다크모드
+    if(count % 2 === 1){
+      $('.badge').html('Light🔄')
+      $('body').toggleClass('bg-dark') // 실제 배경 다크모드 body태그의 속성을 움직여주면된다.
+      $('nav').toggleClass('navbar-dark bg-dark') // nav바도 다크모드
+    }
+    // 클릭횟수가 짝수면 라이트모드
+    if(count % 2 === 0){
+        $('.badge').html('Dark🔄')
+        $('body').toggleClass('bg-dark') // 배경 라이트모드
+        $('nav').toggleClass('navbar-dark bg-dark') // nav바도 라이트모드
+      }
+    })
+ </script> 
 
     <!-- nav바 토글버튼 -->
     <!-- 클래스 탈부착해서 속성 넣고 빼는거 나중에 에니메이션 추가 쉽고 재사용도 편리 -->
@@ -145,6 +143,27 @@
         $(".list-group").toggleClass("show");
       });
 
+      //전송버튼 눌렀을때, input창에 입력한 값이 공백이면 -> 알림창띄우기
+      //폼 전송 기본 속성 막기 e.preventDefault()
+      //아이디 입력칸 띄우면 '아이디입력하세요'
+      //비번 입력칸 띄우면 '비번 입력하세요'
+      // + 비밀번호 자릿수 조건 추가
+      document.querySelector('form').addEventListener('submit', (e)=>{
+          if(document.querySelector('#email').value === ''){
+              e.preventDefault();
+              alert('아이디를 입력하세요')}
+          if(document.querySelector('#pw').value === ''){
+              e.preventDefault();
+              alert('비밀번호를 입력하세요')}
+          if(document.querySelector('#pw').value.length < 8){
+              e.preventDefault();
+              alert('비밀번호는 8자리 이상 입력해야합니다!')
+          }
+      })
+      
+      document.querySelector('#email').addEventListener('change', ()=>{
+          console.log('안녕')
+      })
 
     </script>
   </body>
