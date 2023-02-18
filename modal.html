@@ -43,13 +43,38 @@
     <!-- nav바 메뉴 -->
     <nav class="navbar navbar-light bg-light">
       <div class="container-fluid">
-        <span class="navbar-brand">Navbar</span>
+        <span class="navbar-brand">Denver</span>
         <span class="badge bg-dark">Dark 🔄</span> <!--다크모드 토글 과제-->
         <button class="navbar-toggler" type="button">
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
     </nav>
+    <!-- 스크롤 진척도 -->
+    <div class="line"> <span class="per">0%</span></div>
+   
+
+    <script>
+      $(window).on('scroll',()=>{
+        let 컨텐츠높이 = document.querySelector('html').scrollHeight;
+        let 창크기 = document.querySelector('html').clientHeight;
+        let 현재스크롤양 = window.scrollY;
+        
+        let 진척도 = Math.round((현재스크롤양 + 창크기)/컨텐츠높이*100)
+        let 진척진행률 = 진척도+'%';
+        console.log(진척진행률)
+
+        document.querySelector('.line').style.width = 진척진행률;
+        document.querySelector('.per').textContent = `${진척진행률}`;
+      })
+    </script>
+
+
+
+
+
+
+
 
 
 
@@ -62,7 +87,6 @@
       <li class="list-group-item">A fourth item</li>
       <li class="list-group-item">And a fifth one</li>
     </ul>
-
     <!-- 로그인 창 -->
     <div class="main-bg">
         <h4>Shirts on Sale</h4>
@@ -84,9 +108,86 @@
     <button id="open2">shop</button>
     <button id="open3">info</button>
 
-    <div class="alert alert-danger">
+
+
+    <div style="height: 600px;"></div>
+
+    <!-- 타이머 만들기 -->
+    <!-- <div class="alert alert-danger">
       <span id="sec">5</span> 초이내 구매시 사은품 증정!
+    </div> -->
+
+    <!-- 캐러셀 만들기 -->
+    <div style="overflow: hidden">
+      <div class="slide-container">
+        <div id="img1" class="slide-box">
+          <img src="/carImg/car1.png">
+        </div>
+        <div id="img2" class="slide-box">
+          <img src="/carImg/car2.png">
+        </div>
+        <div id="img3" class="slide-box">
+          <img src="/carImg/car3.png">
+        </div>
+        <div id="img4" class="slide-box">
+          <img src="/carImg/car4.jpg">
+        </div>
+        <div id="img5" class="slide-box">
+          <img src="/carImg/car5.jpg">
+        </div>
+      </div>
     </div>
+    
+    <button class="slide-1">1</button>
+    <button class="slide-2">2</button>
+    <button class="slide-3">3</button>
+    <button class="slide-4">4</button>
+    <button class="slide-5">5</button>
+  
+
+    <button class="before">이전</button>
+    <button class="next">다음</button>
+
+
+<!-- 스크롤 높이와 관련된 기능 -->
+    <div class="lorem" style="width:200px; height: 100px; overflow-y: scroll;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corporis, sequi iusto. Modi iure reprehenderit amet eius asperiores in sunt consequuntur sequi, quaerat delectus nam optio dignissimos, esse nulla! Suscipit, ad.</div>
+
+
+
+<script>
+  // Q. div박스안 내용을 다 읽었다면 다 읽었다고 알림창(alert)띄워주기
+  // 다 읽었다는건 - 유저가 컨텐츠를 스크롤해서 내린 양((높이):scrollTop)과 실제 컨텐츠의 양((높이):scrollHeight)이 같아 지게 된다는 것
+
+  // 1.div박스 내용 스크롤바 내린 양(높이) === 2.div의 실제 높이(실제 div박스전체높이(100px)이 아니라 컨텐츠, 스크롤 가능한 높이를 의미함)
+  // 하지만, 위를 비교해서 콘솔확인해보면 끝까지 내렸을 때 같아지지 않는다!? 왜그럴까?
+  // 이유는 scrollTop을 이용해서 알아낸 스크롤 양은 화면에 보여지지 않는 부분만큼 위로 올라간 부분만 선택했고, 눈에 보이는 부분은 포함시키지 않았기 때문이다. 따라서 눈에 보이는 부분(원래 div높이인 100)을 추가로 더해주어 비교를 다시 해야함
+  // 정정) 1. div의 스크롤바 내린 양(높이) + 눈에보이는 div높이 === 2. div의 실제 높이
+  // 위 조건이면 다읽었다고 판단 가능
+  // 알림창 띄워주기 구현
+
+  $('.lorem').on('scroll',()=>{
+   let 스크롤양 = document.querySelector('.lorem').scrollTop;
+   let 실제높이 = document.querySelector('.lorem').scrollHeight;
+   let 보이는높이 = document.querySelector('.lorem').clientHeight;
+  
+   // 최하단 감지
+   if(스크롤양 + 보이는높이 > 실제높이 - 10){
+      alert('다 읽어서 더이상 페이지가 없다.')
+   }
+  })
+
+  // 스크롤 이벤트 다룰때 주의할 점
+  // 1. 스크롤 이벤트 안의 코드는 1초에 60번이상 실행되어 컴퓨터에 부담을 줌(적당히사용)
+  // 2. 바닥 체크 여러번 중복으로 방지하는 법- 변수활용
+  
+  // 현재페이지 끝까지 스크롤 하여 체크할땐?
+
+  // window.scrollY; -> 현재 페이지 스크롤 양
+  // document.querySelector('html').scrollHeight; -> 현재 페이지 실제 높이(컨텐츠 길이)
+  // document.querySelector('html').clientHeight; -> 브라우저 크기(뷰포트)
+  // 위 처럼 전체 페이지 스크롤 체크시 페이지가 전체로드가 완료후에 실행해야 정확하기 때문에
+  // 보통 body태그 끝나기 전에 써준다.
+</script>
 
     <script src="main.js"></script>
   </body>

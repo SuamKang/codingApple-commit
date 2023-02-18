@@ -1,4 +1,11 @@
-/* indx.html */
+
+:root {
+  scroll-behavior: auto;
+}
+
+
+/* 알림창 만들기 */
+
 
 #alert {
     background-color: skyblue;
@@ -16,7 +23,6 @@
     display: none;
 }
 
-/* modal.html */
 
 
 /* one-way UI 에니메이션 */
@@ -26,6 +32,7 @@
 /* 3. 자바스크립트로 최종스타일로 변경하라는 코드 구현 */
 /* 4. CSS transition추가 */
 
+/* 모달창 만들기 */
 .black-bg {
   width: 100%;
   height: 100%;
@@ -83,4 +90,59 @@
     padding: 100px 20px;
     background-color: #E9F8F9;
     border: 1px solid;
+}
+
+/* 캐러셀 만들기  */
+
+.slide-container {
+  width: 500vw;
+
+  transition: all 1s;
+}
+
+.slide-box {
+  width: 100vw;
+  height: 600px;
+  float: left;
+}
+
+.slide-box img {
+  width: 100%;
+  object-fit: contain;
+
+}
+
+.slide-1,.slide-2,.slide-3,.slide-4,.slide-5,.before,.next {
+  width: 5rem;
+  height: 4rem;
+  border: 3px solid tomato;
+  font-size: 30px;
+  background-color: skyblue;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+/* 스크롤 이벤트 만들기 */
+
+.navbar {
+  position: fixed;
+  width: 100%;
+  z-index: 5;
+}
+
+.navbar-brand {
+   font-size: 40px; /*스크롤 내리기 전 제목 사이즈 */
+   transition: all 1s;
+}
+
+.line {
+  position: fixed;
+  z-index: 5;
+  background-color: black;
+  height: 10px;
+}
+.per {
+  width: 10px;
+  height: 10px;
+  background-color: yellow;
 }
