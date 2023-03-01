@@ -85,7 +85,7 @@
     <!-- Select 인풋 다루기 -->
     <style>
       .hide {
-        visibility: hidden;
+        display: none;
       }
     </style>
 
@@ -94,36 +94,71 @@
       <select class="form-select mt-2">
         <option>모자</option>
         <option>셔츠</option>
+        <option>바지</option>
       </select>
-      <select id="cap" class="form-select mt-2 hide">
-        <option>S</option>
-        <option>M</option>
-        <option>L</option>
-      </select>
-      <select id='shirt' class="form-select mt-2 hide">
-        <option>90</option>
+      <select class="form-select mt-2 hide">
         <option>95</option>
         <option>100</option>
         <option>105</option>
       </select>
+      <select class="form-select mt-2 hide">
+        <option>S</option>
+        <option>M</option>
+        <option>L</option>
+      </select>
     </form>
 
+    <div id="test"></div>
+
     <script>
-      // input 이벤트 : <input>값 변경할때 이벤트작동 
-      // change 이벤트 
+      // 자바스크립트로 html생성하는 법1 (dom요소 불러와서 append 처리하기)
+      let a = document.createElement("p");
+      a.innerHTML = "suam kang";
+      a.style.color = "red";
+      document.querySelector("#test").append(a);
+      // 자바스크립트로 html생성하는 법2
+      // 직접 html코드를 짠후 변수에 할당
+      // dom불러와서 .insertAdjacentHTML('beforeend',변수)
+      let result = "<p>안녕</p>";
+      // html에 문자열로 태그자체를 넣으려할때
+      // document.querySelector('#test').insertAdjacentHTML('beforeend', result);
+      $("#test").append(result); // jquery
+
+      //  -------------------------------------------------------------
+
+      // input 이벤트 : <input>값 변경할때 이벤트작동
+      // change 이벤트
       // console.log($('.form-select').eq(0).val()); // 현재 유저가 선택한 선택지
 
-      let userInput = $(".form-select").eq(0).val(); // 유저가 현재 input하는 위치
+      $(".form-select")
+        .eq(0)
+        .on("input", () => {
+          let userInput = $(".form-select").eq(0).val(); //유저value값
 
-      $('.form-select').eq(0).on("input", () => {
-        if(userInput === "셔츠") {
-          $('#shirt').removeClass("hide");
-
-        } 
-        if(userInput === "모자"){
-          $('#cap').removeClass("hide");
-        }
-      });
+          if (userInput === "셔츠") {
+            $(".form-select").eq(2).addClass("hide");
+            $(".form-select").eq(1).removeClass("hide");
+          }
+          if (userInput === "모자") {
+            $(".form-select").eq(1).addClass("hide");
+            $(".form-select").eq(2).removeClass("hide");
+          }
+          if (userInput === "바지") {
+            $(".form-select").eq(1).removeClass("hide");
+            $(".form-select").eq(1).html(""); // 기존 하드태그된 option애들 지워줌
+            // 바지옵션 추가해서 바지 사이즈 (28,30)옵션 html생성해서 넣기
+            let pants = `<option>28</option>
+            <option>28</option>`;
+            $(".form-select").eq(1).append(pants);
+          } // 바지를눌렀다가 다시 셔츠누르면 셔츠 사이즈 나오게
+          else if (userInput !== "바지" && userInput === "셔츠") {
+            $(".form-select").eq(1).html(""); //다시 기존에있던 select[1]내용 없애주고
+            let shirt = `<option>95</option>
+            <option>100</option>
+            <option>105</option>`;
+            $(".form-select").eq(1).append(shirt);
+          }
+        });
     </script>
 
     <!-- 탭 기능 구현 -->
