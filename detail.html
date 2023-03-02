@@ -97,32 +97,27 @@
         <option>바지</option>
       </select>
       <select class="form-select mt-2 hide">
-        <option>95</option>
+        <!-- <option>95</option>
         <option>100</option>
-        <option>105</option>
-      </select>
-      <select class="form-select mt-2 hide">
-        <option>S</option>
-        <option>M</option>
-        <option>L</option>
+        <option>105</option> -->
       </select>
     </form>
 
     <div id="test"></div>
 
     <script>
-      // 자바스크립트로 html생성하는 법1 (dom요소 불러와서 append 처리하기)
-      let a = document.createElement("p");
-      a.innerHTML = "suam kang";
-      a.style.color = "red";
-      document.querySelector("#test").append(a);
-      // 자바스크립트로 html생성하는 법2
-      // 직접 html코드를 짠후 변수에 할당
-      // dom불러와서 .insertAdjacentHTML('beforeend',변수)
-      let result = "<p>안녕</p>";
-      // html에 문자열로 태그자체를 넣으려할때
-      // document.querySelector('#test').insertAdjacentHTML('beforeend', result);
-      $("#test").append(result); // jquery
+      // // 자바스크립트로 html생성하는 법1 (dom요소 불러와서 append 처리하기)
+      // let a = document.createElement("p");
+      // a.innerHTML = "suam kang";
+      // a.style.color = "red";
+      // document.querySelector("#test").append(a);
+      // // 자바스크립트로 html생성하는 법2
+      // // 직접 html코드를 짠후 변수에 할당
+      // // dom불러와서 .insertAdjacentHTML('beforeend',변수)
+      // let result = "<p>안녕</p>";
+      // // html에 문자열로 태그자체를 넣으려할때
+      // // document.querySelector('#test').insertAdjacentHTML('beforeend', result);
+      // $("#test").append(result); // jquery
 
       //  -------------------------------------------------------------
 
@@ -130,36 +125,118 @@
       // change 이벤트
       // console.log($('.form-select').eq(0).val()); // 현재 유저가 선택한 선택지
 
+      // forEach내장메서드 사용해서 해당 배열요소갯수만큼 콜백함수 안의 코드를 실행함
+      // pants.forEach((el,idx)=>{
+      //   console.log('el : '+ el , 'idx : '+ idx)
+      //   $('.form-select').eq(1).append(`<option>${el}</option>`)
+      // })
+
+      // 서버에서 데이터를 가져왔다고 생각하고 데이터 전달해보기(가짜데이터)
+      let pants = [28, 30, 32, 34];
+      let shirts = [95, 100, 105, 110];
+      let caps = ["S", "M", "L", "XL"];
+
       $(".form-select")
         .eq(0)
         .on("input", () => {
-          let userInput = $(".form-select").eq(0).val(); //유저value값
+          let userInput = $(".form-select").eq(0).val(); //유저의 선택한 value값
 
-          if (userInput === "셔츠") {
-            $(".form-select").eq(2).addClass("hide");
-            $(".form-select").eq(1).removeClass("hide");
+          if (
+            userInput === "모자" &&
+            userInput !== "셔츠" &&
+            userInput !== "바지"
+          ) {
+            $(".form-select").eq(1).removeClass("hide"); // select[1]태그 오픈
+            $(".form-select").eq(1).html(""); //전 선택지 내용 초기화
+            caps.forEach((el) => {
+              // '모자' 배열안 데이터들 순회해서 다 보여줌
+              $(".form-select").eq(1).append(`<option>${el}</option>`);
+            });
           }
-          if (userInput === "모자") {
-            $(".form-select").eq(1).addClass("hide");
-            $(".form-select").eq(2).removeClass("hide");
-          }
-          if (userInput === "바지") {
+          if (
+            userInput === "셔츠" &&
+            userInput !== "모자" &&
+            userInput !== "바지"
+          ) {
             $(".form-select").eq(1).removeClass("hide");
-            $(".form-select").eq(1).html(""); // 기존 하드태그된 option애들 지워줌
-            // 바지옵션 추가해서 바지 사이즈 (28,30)옵션 html생성해서 넣기
-            let pants = `<option>28</option>
-            <option>28</option>`;
-            $(".form-select").eq(1).append(pants);
-          } // 바지를눌렀다가 다시 셔츠누르면 셔츠 사이즈 나오게
-          else if (userInput !== "바지" && userInput === "셔츠") {
-            $(".form-select").eq(1).html(""); //다시 기존에있던 select[1]내용 없애주고
-            let shirt = `<option>95</option>
-            <option>100</option>
-            <option>105</option>`;
-            $(".form-select").eq(1).append(shirt);
+            $(".form-select").eq(1).html("");
+            shirts.forEach((el) => {
+              $(".form-select").eq(1).append(`<option>${el}</option>`);
+            });
+          }
+          if (
+            userInput === "바지" &&
+            userInput !== "모자" &&
+            userInput !== "셔츠"
+          ) {
+            $(".form-select").eq(1).removeClass("hide");
+            $(".form-select").eq(1).html("");
+            pants.forEach((el) => {
+              $(".form-select").eq(1).append(`<option>${el}</option>`);
+            });
+
+            // 하드코딩
+            //   // 바지옵션 추가해서 바지 사이즈 (28,30)옵션 html생성해서 넣기
+            //   let pants = `<option>28</option>
+            //   <option>28</option>`;
+            //   $(".form-select").eq(1).append(pants);
+            // } // 바지를눌렀다가 다시 셔츠누르면 셔츠 사이즈 나오게
+            // else if (userInput !== "바지" && userInput === "셔츠") {
+            //   $(".form-select").eq(1).html(""); //다시 기존에있던 select[1]내용 없애주고
+            //   let shirt = `<option>95</option>
+            //   <option>100</option>
+            //   <option>105</option>`;
+            //   $(".form-select").eq(1).append(shirt);
           }
         });
+
+      // 배열 연습 1
+      let 출석부 = ["흥민", "영희", "철수", "재석", "철수"];
+      function findName(name) {
+        // 위 배열 순회해서 그안에 조건을걸어 '철수'면 콘솔로 '있어요' 보여주기
+        // 조건이 '명수'면 콘솔에 빈문자
+        for (let i = 0; i < 출석부.length; i++) {
+          if (name === 출석부[i]) {
+            return console.log("here");
+          }
+        }
+      }
+      findName("철수");
+
+      //배열 연습 2
+      // 구구단 만들기
+      // 구구단 형태 : i * j = k
+      // i의 범위 2~9 / j의 범위도 2~9 -> 이중반복문
+
+      // for(let n = 2; n < 10; n++){
+      //   for(let i = 1; i < 10; i++){
+      //     console.log(n * i);
+      //   }
+      // }
+
+      // 배열 연습 3
+      // 평균점수내기
+
+      // 기존 성적데이터가 담긴 배열
+
+      function evl(arr, num) {
+        // code
+        let result = 0;
+        for (let i = 0; i < arr.length; i++) {
+          result = result + arr[i];
+        }
+        if (result / arr.length < num) {
+          console.log("평균이상");
+        } else {
+          console.log("평균이거나 그이하");
+        }
+      }
+      evl([10, 20, 30, 40, 50], 30);
     </script>
+
+
+
+
 
     <!-- 탭 기능 구현 -->
     <div class="container mt-5">
