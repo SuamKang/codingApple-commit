@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="main.css" />
+    <!-- jQuery -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <title>Ajax request</title>
+  </head>
+
+  <style>
+    .hide {
+      display: none;
+    }
+  </style>
+
+  <!-- 상품리스트 -->
+  <body>
+    <div class="container">
+      <div class="row">
+        <!-- <div class="col-sm-4">
+          <img src="https://via.placeholder.com/600" class="w-100" />
+          <h5>Card title</h5>
+          <p>가격 : 70000</p>
+        </div> -->
+      </div>
+    </div>
+
+    <!-- 더보기 버튼누르면 서버에 요청해서 데이터 가져오기 -->
+    <div class="container">
+      <button id="more" class="btn btn-danger">더보기</button>
+    </div>
+    <!-- 가격정렬 버튼 -->
+    <div class="container">
+      <button id="price" class="btn btn-dark">가격순정렬</button>
+    </div>
+    <!-- 상품명 역순정렬 버튼-->
+    <div class="container">
+      <button id="title" class="btn btn-danger">상품명 역순</button>
+    </div>
+    <!-- 6만원 이하 상품만 보기 버튼 -->
+    <div class="container">
+      <button id="less" class="btn btn-dark">6만원 이하</button>
+    </div>
+
+    <script>
+      // 상품리스트
+      var products = [
+        { id: 0, price: 70000, title: "Blossom Dress" },
+        { id: 1, price: 50000, title: "Springfield Shirt" },
+        { id: 2, price: 60000, title: "Black Monastery" },
+      ];
+
+      // products 정렬하기
+      // 가격순정렬 버튼 누르면
+      $("#price").on("click", () => {
+        products.sort((a, b) => {
+          return a.price - b.price;
+        });
+        $(".row").html(""); // 정렬 전 카드3개div 제거
+        //
+        products.forEach((el) => {
+          // 바뀐 정렬로 다시 출력
+          let newCard = ` <div class="col-sm-4">
+                  <img src="https://via.placeholder.com/600" class="w-100">
+                  <h5>${el.title}</h5>
+                  <p>${el.price}</p>
+                  </div>`;
+          $(".row").append(newCard);
+        });
+      });
+
+      // 과제 1 : 상품명을 역순으로 정렬하기
+      // 문자 역순 정렬
+      let array = ['가', '다', '라', '나']
+      array.sort(function(a,b){
+        if(a < b) return 1; // 양수
+        else return -1; //
+      })
+    //   console.log(array)
+
+
+      $("#title").on('click',()=>{
+        products.sort((a,b)=>{
+            if(a.title < b.title) return 1;
+            else return -1;
+        });
+        console.log(products)
+        $('.row').html('');
+        products.forEach((el) => {
+          // 바뀐 정렬로 다시 출력
+          let newCard = ` <div class="col-sm-4">
+                  <img src="https://via.placeholder.com/600" class="w-100">
+                  <h5>${el.title}</h5>
+                  <p>${el.price}</p>
+                  </div>`;
+          $(".row").append(newCard);
+        });
+      })
+      // 과제 2 : 가격이 6만원 이하인 상품만 보기
+
+      $('#less').on('click',()=>{
+        let result = products.filter((el)=>{
+            return el.price <= 60000;
+        });
+        $('.row').html('');
+        result.forEach((el) => {
+            // 바뀐 정렬로 다시 출력
+            let newCard = ` <div class="col-sm-4">
+                    <img src="https://via.placeholder.com/600" class="w-100">
+                    <h5>${el.title}</h5>
+                    <p>${el.price}</p>
+                    </div>`;
+            $(".row").append(newCard);
+          });
+      });
+      
+
+      // 넣을 태그하나 만들어서 형태만들고 원하는 요소 안에 append하기
+      for (let i = 0; i < products.length; i++) {
+        let newCard = ` <div class="col-sm-4">
+                  <img src="https://via.placeholder.com/600" class="w-100">
+                  <h5>${products[i].title}</h5>
+                  <p>${products[i].price}</p>
+                  </div>`;
+        //document.querySelector(".row").insertAdjacentHTML("beforeend", newCard);
+        $(".row").append(newCard); // jQuery
+      }
+
+      // 배열 정렬
+      // 문자정렬
+      let arr = [4, 5, 34, 63, 244];
+      arr.sort();
+      // console.log(arr);//[244, 34, 4, 5, 63] -> sort()는 문자기준으로 정렬함(유니코드)
+
+      // 숫자정렬(오름차순)
+      arr.sort((a, b) => {
+        // a,b는 배열안의 요소임
+        return a - b; // -> 내림차순은 요소 서로 반대
+      });
+      // console.log(arr)
+
+      // 작동원리
+      // 1. a,b는 배열 요소
+      // 2. return에 양수값이면 a를 오른쪽으로 이동 a가 더큰값
+      // 3. return에 음수값이면 b를 오른쪽으로 이동 b가 더큰값
+    </script>
+
+    <script>
+      // 임의의 데이터 받아와서 화면에 출력해줄수있는 배열 함수 생성
+      function setData(data) {
+        data.forEach((el) => {
+          // console.log(data);
+          let newCard = ` <div class="col-sm-4">
+                    <img src="https://via.placeholder.com/600" class="w-100">
+                    <h5>${el.title}</h5>
+                    <p>${el.price}</p>
+                    </div>`;
+          $(".row").append(newCard);
+        });
+      }
+
+      // 더보기버튼 클릭하면 상품 3개 가져와서 출력하기
+
+      //   $("#more").on("click", () => {
+      //     $.get("https://codingapple1.github.io/js/more1.json").done((data) => {
+      //       setData(data);
+      //     });
+      //   });
+
+      // 버튼을 2번째 눌렀을때 7,8,9번째 상품을 불러와서 출력해야함
+
+      let count = 0; // 우선 버튼 누른 횟수를 지정할 카운트 변수 생성
+      // 1번째 누를때 3,4,5 데이터가져오는것 기록
+      // 2번째 누를때 7,8,9 데이터가져오는것 기록
+      // 3번째부터는 데이터 없으니 버튼 비활성화
+      $("#more").on("click", () => {
+        count++; // 버튼을 눌릴때마다 1씩 증가
+        if (count === 1) {
+          // 처음 누른거면 3,4,5데이터 불러와서 출력
+          $.get("https://codingapple1.github.io/js/more1.json").done((data) => {
+            setData(data);
+          });
+        } else if (count === 2) {
+          // 두번째누른거면 6,7,8 데이터 출력
+          $.get("https://codingapple1.github.io/js/more2.json").done((data) => {
+            setData(data);
+            $("#more").addClass("hide");
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

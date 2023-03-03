@@ -50,6 +50,40 @@
         </div>
       </div>
     </div>
+    <!-- 데이터를 서버로 보내줌 -->
+    <form action="/url" method="post"></form>
+
+
+    <script>
+      // ajax로 get요청보내는법(jquery사용시)
+      $.get('https://codingapple1.github.io/hello.txt')
+      .done(function(data){
+        console.log(data);
+      })
+      .fail(function(){console.log('실패띠')})
+
+
+      // // ajax로 post요청보내기 -> post()첫번째에 보낼 주소와 두번째인자에 서버로 전달할 데이터를 객체형태로 전달(주소가 fake로 보낼순 없음)
+      // $.post('https://codingapple1.github.io/hello.txt',{name : 'kang'})
+      // .done(function(data){ // 요청 성공
+      //   console.log(data);
+      // })
+      // .fail(function(){ // ajax요청이 실패했을때
+      //   console.log('error')
+      // })
+      
+      $.get('https://codingapple1.github.io/price.json').done((data)=>{console.log(data.price)})
+
+      // ajax로 요청(브라우저 기본함수인 fetch 사용시-쌩자바스크립트로)
+      fetch('https://codingapple1.github.io/price.json')
+      .then(res => res.json()) // 응답받아서 json화하기
+      .then(data => { // 요청성공하면 data가 받아짐
+        console.log(data);
+      })
+      .catch(error => { // 실패하면 error가 뜸
+        console.log(error);
+      })  
+    </script>
 
     <script>
       var products = [
@@ -57,18 +91,20 @@
         { id: 1, price: 50000, title: "Springfield Shirt" },
         { id: 2, price: 60000, title: "Black Monastery" },
       ];
-    // 변수처리
+
+      
+      // 변수처리
       let newTitle = document.querySelectorAll(".card-title");
       let newPrice = document.querySelectorAll(".card-price");
 
-    //   newTitle[0].innerHTML = products[0].title;
-    //   newPrice[0].innerHTML = `가격 : ${products[0].price}`;
+      //   newTitle[0].innerHTML = products[0].title;
+      //   newPrice[0].innerHTML = `가격 : ${products[0].price}`;
 
-    //   newTitle[1].innerHTML = products[1].title;
-    //   newPrice[1].innerHTML = `가격 : ${products[1].price}`;
+      //   newTitle[1].innerHTML = products[1].title;
+      //   newPrice[1].innerHTML = `가격 : ${products[1].price}`;
 
-    //   newTitle[2].innerHTML = products[2].title;
-    //   newPrice[2].innerHTML = `가격 : ${products[2].price}`;
+      //   newTitle[2].innerHTML = products[2].title;
+      //   newPrice[2].innerHTML = `가격 : ${products[2].price}`;
 
       // 반복문 사용
       for (let i = 0; i < 3; i++) {
