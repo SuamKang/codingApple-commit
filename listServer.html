@@ -65,7 +65,148 @@
         { id: 2, price: 60000, title: "Black Monastery" },
       ];
 
-      // products 정렬하기
+      // card 형태만들고 원하는 요소 안에 append하기
+      for (let i = 0; i < products.length; i++) {
+        let newCard = ` <div class="col-sm-4">
+                  <img src="https://via.placeholder.com/600" class="w-100">
+                  <h5>${products[i].title}</h5>
+                  <p>${products[i].price}</p>
+                  <button class="buy">구매</button>
+                  <button class="delete">삭제</button>
+                  </div>`;
+        //document.querySelector(".row").insertAdjacentHTML("beforeend", newCard);
+        $(".row").append(newCard); // jQuery
+      }
+
+      // 장바구니 기능과 LocalStorage 사용
+
+      // 일반적으로 가장 쉬운 데이터 저장은 변수에 담는다. 하지만 리로드시 새로고침되면 초기화가 되기때문에 영구적으로 저장하기 위해 적합하지 않는다.
+      // 반영구적인 저장소 => 브라우저안의 저장공간이용 => localStorage
+
+      // 개발자 도구에 Application에 있음
+      // Local Storage / Session Storage (key : value 형태로 문자, 숫자 데이터만 5MB까지 저장가능), Local은 재접속시에도 영구적으로 남아있지만, Session은 브라우저 종료시 정보도 없어진다.-> 의도적으로 브라우저를 청소하지않은이상 데이터 저장 가능함
+      // Indexed DB (크고 많은 구조화된 데이터를 DB처럼 저장가능, 문법더러움)
+      // Cookies (유저 로그인정보 저장공간)
+      // Cache Storage (html css js img 파일 저장해두는 공간)
+
+      // localStorage 다루기
+      //   localStorage.setItem('이름','kang') // 저장하기
+      //   localStorage.getItem('이름') //불러오기(출력)
+      //   localStorage.removeItem('이름') // 저장데이터 삭제하기
+
+      // object/array형태로 저장하기
+      // json화 해야함
+      //   let arr2 = [1,2,3,5,7];
+      //   let newArr = JSON.stringify(arr2) // json 문자열형태로 변환
+      //   localStorage.setItem('num', newArr) // 문자열 형태로 저장됨
+
+      //   let getArr = localStorage.getItem('num'); // 데이터 가져와서 변수 할당
+      //   console.log(getArr); // 문자type
+      //   let parseArr = JSON.parse(getArr); // json형식을 다시 object로 변환
+      //   console.log(parseArr) // 객체(배열)type
+
+      // localStorage 데이터 수정하기
+      // 1. 수정할 자료 꺼낸다
+      // 2. 꺼낸자료 수정한다
+      // 3. 다시 넣는다
+
+      // 과제1. 구매버튼 누르면 누른 상품명 localStorage에 저장하기
+      // 팁1 형제요소 찾는법 알야아함 // previousElementSibling
+      // 팁2 스토리지 비어있을때(어레이추가)와 이미 있을때 저장방식 다르게(수정하는식으로)
+
+      //   $('.buy').click(function(e){
+      //     //cart 라는 제목으로 배열형식으로 데이터 넣기위해 누르면 배열 값이 담기게
+      //     let button = e.target; // 버튼의형제요소 찾기(e.target)
+      //     let productsName = button.previousElementSibling.previousElementSibling;
+      //     let title = productsName.textContent; // 저장할 자료 요소에서 찾기(title)
+      //     let arrTitle = JSON.stringify([title])
+
+      //     if(localStorage.getItem('cart') !== null){ // cart에 불러올수있는 값이 있으면
+      //         // 수정하기
+      //         // 수정할자료 꺼내기
+      //         let obj = JSON.parse(localStorage.cart); // 수정할 자료 파싱해서 객체형태로
+      //         obj.push(title) // 배열에 새로운 상품명 추가
+      //         localStorage.setItem('cart', JSON.stringify(obj)) // 추가된 상품 다시 저장
+      //     } else { // 없으면 set해서 저장 새로해라
+      //         localStorage.setItem('cart', arrTitle)
+      //     }
+      //   })
+
+      // i) jQuery 방식
+      //   $('.buy').click(function(e){
+      //     let title = $(e.target).siblings('h5').text(); // 버튼클릭시 저장될 요소 내용꺼내기(문자타입)
+      //     // 만약 이미 스토리지에 cart라는 이름의 값이 존재하면, 수정
+      //     if(localStorage.getItem('cart')){
+      //         // 그 존재하는 cart안의 상품명이 중복되지 않은것만 넣기
+      //         let titled = localStorage.cart; // 일단 불러와야지(얜 이미 json화된 값)
+      //         let jsonPar = JSON.parse(titled); // 다시 객체형태로 변환시켜서
+      //         jsonPar.push(title) // 새로운 상품명 추가해주고
+      //         localStorage.setItem('cart', JSON.stringify(jsonPar)) // 저장
+      //     } else {
+      //         // 없으면 저장해준다
+      //         localStorage.setItem('cart', JSON.stringify([title])) // array형태의 값을 저장하고 싶을때는 JSON변환
+      //     }
+      //   })
+
+      // 과제2. cart.html 만들어서 이 페이지 방문시 localStorage에 저장된 상품명들 다보여주기
+      // OK
+
+      // 응용문제 1.
+      //    중복된거를 거르는 조건을 실행시키려면
+      //    우선 기존에 로컬에 이미 담겨있는 배열1과 새로 버튼을 눌려 담을려하는 배열2의 요소가 있는지 없는지 확인해야함
+      //    배열1 과 배열2를 만들고 배열1은 이벤트가 일어나기 전인 기존 상태인 배열이다
+      // 즉 비교대상 배열을 2개 만들어주는게 핵심인듯
+    //   let 배열1 = []; // old
+    //   $(".buy").click(function (e) {
+    //     // 추가버튼 누르면
+    //     // 로컬에담긴 상품 꺼내서
+    //     let 배열2 = []; // new
+    //     let title = $(e.target).siblings("h5").text();
+    //     배열1.push(title);
+    //     // 중복확인작업
+    //     for (let i = 0; i < 배열1.length; i++) {
+    //       if (!배열2.includes(배열1[i])) {
+    //         // 배열2안에 요소들중 배열1요소가 하나라도 없으면
+    //         배열2.push(배열1[i]); // 넣어주고
+    //       }
+    //     } // 있음 안넣어줌
+    //     localStorage.setItem("cart", JSON.stringify(배열2));
+    //     // console.log(배열2)
+    //     // console.log(배열1)
+    //   });
+
+      // 응용문제 2.
+      // 상품저장시 로컬에 몇개 저장되었는지 갯수도 저장시켜주자
+      //  let cart = [{name : item1, qun : 2},{name : item2, qun : 4}] 이런 형식
+
+        let cart = [];
+        $('.buy').click(function(e){
+          // 담길요소 불러와주고
+          let title2 = $(e.target).siblings('h5').text();
+          // 중복요소가 있다면 배열안의 프로퍼티속성중 qun을 1 추가한다
+          // findIndex메서드로 일단 내가 찾는 요소의 인덱스가 있는지 알아서 변수에 넣고 활용하자
+          // 이미 cart에 있는요소인지 판별되어 있는 아이템인덱스를 find
+          let findIdx = cart.findIndex((el)=>{ return el.name === title2 })
+          if(findIdx === -1){ // 해당아이템이 cart에 없다면(인덱스가 -1이면 해당요소가 배열에 없음)
+            cart.push({name : title2 , qun : 1}); // 새로 넣어준 격
+          } else {
+              cart[findIdx].qun++; // 카트에있는 해당 아이템의 qun속성을 1추가
+          }
+          localStorage.setItem('cart', JSON.stringify(cart))
+          console.log(cart)
+        })
+
+      //삭제버튼
+      $(".delete").click(function () {
+        localStorage.removeItem("cart"); // 로컬스토리지의 내용 삭제
+        // cart도 비워줘야지
+        cart = [];
+        console.log(cart);
+      });
+
+
+///////////////////////////////////////////////////////////////////////////////////
+      // Q. products 정렬하기
       // 가격순정렬 버튼 누르면
       $("#price").on("click", () => {
         products.sort((a, b) => {
@@ -86,21 +227,19 @@
 
       // 과제 1 : 상품명을 역순으로 정렬하기
       // 문자 역순 정렬
-      let array = ['가', '다', '라', '나']
-      array.sort(function(a,b){
-        if(a < b) return 1; // 양수
+      let array = ["가", "다", "라", "나"];
+      array.sort(function (a, b) {
+        if (a < b) return 1; // 양수
         else return -1; //
-      })
-    //   console.log(array)
-
-
-      $("#title").on('click',()=>{
-        products.sort((a,b)=>{
-            if(a.title < b.title) return 1;
-            else return -1;
+      });
+      //   console.log(array)
+      $("#title").on("click", () => {
+        products.sort((a, b) => {
+          if (a.title < b.title) return 1;
+          else return -1;
         });
-        console.log(products)
-        $('.row').html('');
+        console.log(products);
+        $(".row").html("");
         products.forEach((el) => {
           // 바뀐 정렬로 다시 출력
           let newCard = ` <div class="col-sm-4">
@@ -110,36 +249,24 @@
                   </div>`;
           $(".row").append(newCard);
         });
-      })
+      });
       // 과제 2 : 가격이 6만원 이하인 상품만 보기
 
-      $('#less').on('click',()=>{
-        let result = products.filter((el)=>{
-            return el.price <= 60000;
+      $("#less").on("click", () => {
+        let result = products.filter((el) => {
+          return el.price <= 60000;
         });
-        $('.row').html('');
+        $(".row").html("");
         result.forEach((el) => {
-            // 바뀐 정렬로 다시 출력
-            let newCard = ` <div class="col-sm-4">
+          // 바뀐 정렬로 다시 출력
+          let newCard = ` <div class="col-sm-4">
                     <img src="https://via.placeholder.com/600" class="w-100">
                     <h5>${el.title}</h5>
                     <p>${el.price}</p>
                     </div>`;
-            $(".row").append(newCard);
-          });
+          $(".row").append(newCard);
+        });
       });
-      
-
-      // 넣을 태그하나 만들어서 형태만들고 원하는 요소 안에 append하기
-      for (let i = 0; i < products.length; i++) {
-        let newCard = ` <div class="col-sm-4">
-                  <img src="https://via.placeholder.com/600" class="w-100">
-                  <h5>${products[i].title}</h5>
-                  <p>${products[i].price}</p>
-                  </div>`;
-        //document.querySelector(".row").insertAdjacentHTML("beforeend", newCard);
-        $(".row").append(newCard); // jQuery
-      }
 
       // 배열 정렬
       // 문자정렬

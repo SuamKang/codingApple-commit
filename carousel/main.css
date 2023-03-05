@@ -1,0 +1,28 @@
+/* 캐러셀 만들기  */
+
+.slide-container {
+    width: 500vw;
+    /* transition: all 1s; */
+  }
+  
+  .slide-box {
+    width: 100vw;
+    height: 600px;
+    float: left;
+  }
+  
+  .slide-box img {
+    width: 100%;
+    object-fit: contain;
+  
+  }
+  
+  .slide-1,.slide-2,.slide-3,.slide-4,.slide-5,.before,.next {
+    width: 5rem;
+    height: 4rem;
+    border: 3px solid tomato;
+    font-size: 30px;
+    background-color: skyblue;
+    border-radius: 5px;
+    display: inline-block;
+  }

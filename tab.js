@@ -96,3 +96,4 @@ $('.list').click(function(e){
 // jQuery
 // 입력 : $().data('데이터이름','값');
 // 출력 : $().data('데이터이름');
+

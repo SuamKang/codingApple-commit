@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/appleMusicUI/main.css" />
+    <!-- jQuery -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <title>Apple Music</title>
+  </head>
+  <body>
+      <div class="card-background">
+        <div class="card-text">
+            <h1 class="main-text">It's as easy as it sounds.</h1>
+        </div>
+        <div class="card-box">
+            <img src="/appleMusicUI/card1.png">
+        </div>
+        <div class="card-box">
+            <img src="/appleMusicUI/card2.png">
+        </div>
+        <div class="card-box">
+            <img src="/appleMusicUI/card3.png">
+        </div>
+    </div>
+
+    <script>
+        $(window).scroll(function(){
+            let scroll = $(window).scrollTop(); // 현재 스크롤 높이
+            // 높이 1160~1711까지 스크롤바 내리면 1번카드 투명도를 1에서 0으로 서서히 변경시키기
+            // 첫번째 이미지 불러오자 일단
+            // 스크롤바가 지정한 위치로 변하는 높이를 함수표현으로 나타내보면
+            // 높이를 y라고 했을때 대입법으로 구하자
+            // y = ax + b (수학에서 x축이 증가할때 y축이 감소하는 곡선, 일차함수)
+            // 투명도 = a * 높이 + b (x축은 높이, y축은 투명도(1 -> 0))
+            // 1 = a*1160 + b
+            // 0 = a*1711 + b
+            // a = (-1/551);
+            // b = (1711/551);
+            let y = (-1/551)* scroll + (1711/551);
+            $('.card-box').eq(0).css("opacity", y);
+            // 투명해짐과 동시에 박스 크기가 0.9사이즈로 작아지게 하기
+            // 아까 점점 투명해지는 변수를 설정한것과 마찬가지로 임의의 변수를 만들어 저장해주고 값을 계산해서 대입해서 쓰자
+            // z = ax + b
+            // 1160일때 z는 1, 1711일때 z는 0.9
+            // 1 = a*1160 + b
+            // 0.9 = a*1711 + b
+            // a = (667/551)
+            // b = (-1/5510)
+            let z =  (-1/5510) * scroll + (667/551);
+            $('.card-box').eq(0).css("transform", `scale(${z})`);
+
+        })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="main.css" />
+    <!-- jQuery -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <title>장바구니</title>
+  </head>
+  <body>
+    <div id="cartItem">장바구니 페이지</div>
+    <script>
+      // 여기에 상품들 불러오자
+      let items = localStorage.getItem("cart");
+      let objItem = JSON.parse(items);
+      console.log(objItem); // 객체형태로 변환
+      objItem.forEach((el) => { // 변환된 배열(객체)를 순회하면서 데이터 화면에 뿌려주기
+        $("#cartItem").append(`<p>상품명 :${el.name} 수량 :${el.qun}</p>`);
+      });
+    </script>
+  </body>
+</html>
